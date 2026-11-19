@@ -23,7 +23,7 @@ const authSystemMiddlewear = async(req,res,next)=>{
     }
     try {
         const decode = jwt.verify(token,process.env.JWT_SECRET);
-        const user = await usermodel.findById(decode.id)
+        const user = await usermodel.findById(decode.id).select("+systemUser")
         if(!user.systemUser){
             return res.status(403).json({success:false,message:"Forbidden"})
         }

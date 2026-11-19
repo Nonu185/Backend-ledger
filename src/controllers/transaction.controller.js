@@ -153,7 +153,6 @@ async function createinitialTransaction(req,res){
         return res.status(404).json({ message: "toAccount not found" });
     }
     const fromuserAccount = await accountmodel.findOne({ 
-        systemUser: true,
          user:req.user._id
          });
     if (!fromuserAccount) {

@@ -51,7 +51,7 @@ const getAccountBalance = async (req, res) => {
             message: 'Account not found'
         })
     }
-    const balance = account.getBalance()
+    const balance = await account.getBalance()
     res.status(200).json({
         balance: balance
     })
