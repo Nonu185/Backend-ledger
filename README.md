@@ -52,7 +52,9 @@ backend-ledger/
         ├── auth.route.js             # /api/auth routes
         ├── account.route.js          # /api/account routes
         └── transaction.routes.js     # /api/transaction routes
+```
 
+---
 
 ## Testing with Postman (Sample Flow)
 
