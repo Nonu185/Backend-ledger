@@ -52,3 +52,20 @@ backend-ledger/
         ├── auth.route.js             # /api/auth routes
         ├── account.route.js          # /api/account routes
         └── transaction.routes.js     # /api/transaction routes
+
+
+## Testing with Postman (Sample Flow)
+
+1. **Health Check:** `GET /health` to verify the server is running.
+2. **Register & Login:**
+   - `POST /api/auth/register` with `{ "username", "email", "password" }`
+   - `POST /api/auth/login` with `{ "email", "password" }` (stores JWT cookie)
+3. **Create Account & Check Balance:**
+   - `POST /api/account/create` (authenticated) to create an `ACTIVE` account
+   - `GET /api/account/balance/:id` to check the live balance from ledger entries
+4. **Initial Funding (System User):**
+   - Log in as a user with `systemUser: true` and call `POST /api/transaction/initial-fund` with `{ "toAccount", "amount", "idempotencyKey" }`
+5. **Peer-to-Peer Transfer & Idempotency:**
+   - Log in as the sender account owner and call `POST /api/transaction` with `{ "fromAccount", "toAccount", "amount", "idempotencyKey" }`
+   - Retry with the **exact same `idempotencyKey`** to verify duplicate requests do not re-deduct funds
+6. **Logout:** `POST /api/auth/logout` to end the session.
